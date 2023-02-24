@@ -3,6 +3,8 @@ package uz.itschool.countries
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.core.widget.addTextChangedListener
 
 import uz.itschool.countries.databinding.ActivityMainBinding
 
@@ -27,6 +29,40 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+        var p = intent.getStringExtra("population")
+        var a = intent.getStringExtra("area")
+        var i = intent.getIntExtra("index",-1)
+
+        if (i!=-1){
+            list.get(i).population=p.toString()
+            list.get(i).area=a.toString()
+        }
+
+        var countryAdapter = Adapter(this, list)
+        binding.main.adapter = countryAdapter
+
+        binding.main.setOnItemClickListener { _, _, i, _ ->
+            var user = list.get(i)
+            Log.d("TAG", "onTextChanged: ")
+            var intent = Intent(this, MoreInfoActivity::class.java)
+            intent.putExtra("user",user)
+            startActivity(intent)
+        }
+
+        binding.search.addTextChangedListener {
+            var filter = mutableListOf<Country>()
+            if (it != null) {
+                for (c in list) {
+                    if (c.name.contains(it.toString())) {
+                        filter.add(c)
+                    }
+                }
+                countryAdapter = Adapter(this, filter)
+                binding.main.adapter = countryAdapter
+            }
+
+        }
 
     }
 

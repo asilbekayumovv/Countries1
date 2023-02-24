@@ -13,9 +13,11 @@
         android:theme="@style/Theme.Countries"
         tools:targetApi="31">
         <activity
+            android:name=".EditCountry"
+            android:exported="false" />
+        <activity
             android:name=".MoreInfoActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -24,8 +26,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
     </application>
 

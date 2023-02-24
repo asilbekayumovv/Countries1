@@ -1,6 +1,7 @@
 package uz.itschool.countries
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +38,16 @@ class Adapter(context: Context, var users: MutableList<Country>)
         binding.name.text = user.name
         binding.population.text = user.population
         binding.area.text = user.area
-
+        binding.delete.setOnClickListener {
+            users.removeAt(position)
+            notifyDataSetChanged()
+        }
+        binding.edit.setOnClickListener {
+            val intent = Intent(parent.context,EditCountry::class.java)
+            intent.putExtra("country",user)
+            intent.putExtra("index",position)
+            parent.context.startActivity(intent)
+        }
         return binding.root
     }
 }
